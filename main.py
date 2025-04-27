@@ -271,6 +271,7 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
         v = patient_summary.get(w, 0)
         patient_summary[w] = v + 1
 
+    torch.save(best_model.state_dict(), 'best_model_weights.pth')
     return test_auc, test_acc, cm, recall, precision
 
 
