@@ -75,7 +75,8 @@ stats = {}
 stats_id = {}
 
 if args.task == 'haniffa' or args.task == 'combat':
-    label_dict = {0: 'Non Covid', 1: 'Covid'}
+    # label_dict = {0: 'Non Covid', 1: 'Covid'}
+    label_dict = {0: 'Mild', 1: 'Severe'}
 elif args.task == 'severity':
     label_dict = {0: 'mild', 1: 'severe'}
 elif args.task == 'stage':
