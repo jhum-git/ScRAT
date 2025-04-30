@@ -5,9 +5,14 @@ import scanpy
 
 def Covid_data(args):
     if args.task == 'haniffa':
-        id_dict = {'Critical ': 1, 'Death': -1, 'Severe': 1, 'nan': -1, 'LPS': 0, 'Non-covid': 0, 'Asymptomatic': 1,
-                   'Mild': 1, 'Healthy': 0, 'Moderate': 1}
 
+        if args.relabeled != True:
+            id_dict = {'Critical ': 1, 'Death': -1, 'Severe': 1, 'nan': -1, 'LPS': 0, 'Non-covid': 0, 'Asymptomatic': 1,
+                    'Mild': 1, 'Healthy': 0, 'Moderate': 1}
+        else:
+            id_dict = {'Critical ': 1, 'Death': -1, 'Severe': 1, 'nan': -1, 'LPS': -1, 'Non-covid': -1, 'Asymptomatic': 0,
+                    'Mild': 0, 'Healthy': -1, 'Moderate': 0}
+            
         if args.pca == True:
             with open('./data/Haniffa/Haniffa_X_pca.npy', 'rb') as f:
                 origin = np.load(f)

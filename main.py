@@ -271,9 +271,10 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
         v = patient_summary.get(w, 0)
         patient_summary[w] = v + 1
 
-    torch.save(best_model.state_dict(), 'best_model_weights.pth')
+    torch.save(best_model.state_dict(), 'artifacts/best_model_weights.pth')
     return test_auc, test_acc, cm, recall, precision
 
+# -------------------------------------------------- MAIN
 
 if args.model != 'Transformer':
     args.repeat = 60
@@ -299,7 +300,7 @@ for train_index, test_index in rkf.split(num):
     unique, cts = np.unique(label_stat, return_counts=True)
     if len(unique) < 2 or (1 in cts):
         continue
-#     print(dict(zip(unique, cts)))
+    #     print(dict(zip(unique, cts)))
 
     kk = 0
     while True:
@@ -316,7 +317,7 @@ for train_index, test_index in rkf.split(num):
     train_ids = []
     for i in train_index:
         train_ids.append(patient_id[p_idx[i][0]])
-#     print(train_ids)
+    #     print(train_ids)
 
     x_train = []
     x_test = []

@@ -217,6 +217,23 @@ def sampling(args, train_p_idx, test_p_idx, labels_, labels_augmented, cell_type
 
     return individual_train, individual_test
 
+# requires args.test_sample_cells, args.test_num_sample
+def sampling_test_all_only(args, test_p_idx, labels_):
+    individual_test = []
+
+    for idx in test_p_idx:
+        y = labels_[idx[0]]
+        if idx.shape[0] < args.test_sample_cells:
+            sample_cells = idx.shape[0]
+        else:
+            sample_cells = args.test_sample_cells
+        temp = []
+        for _ in range(args.test_num_sample):
+            sample = np.random.choice(idx, sample_cells, replace=False)
+            temp.append((sample, y))
+        individual_test.append(temp)
+
+    return individual_test
 
 def stratify(out, split=2):
     f = lambda x: int(x * split)
