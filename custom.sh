@@ -1,4 +1,4 @@
-python main.py  \
+python custom.py  \
     --model Transformer \
     --epochs 100 \
     --norm_first False \
