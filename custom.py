@@ -15,7 +15,7 @@ def _str2bool(v):
 parser = argparse.ArgumentParser(description='generte covid data')
 
 parser.add_argument("--task", type=str, default="haniffa")
-parser.add_argument("--relabeled", type=_str2bool, default=False)
+parser.add_argument("--relabeled", type=_str2bool, default=True)
 parser.add_argument('--pca', type=_str2bool, default=True)
 
 parser.add_argument("--test_sample_cells", type=int, default=500,

@@ -1,6 +1,6 @@
 python custom.py  \
     --task haniffa \
-    --relabeled False \
+    --relabeled True \
     --pca True \
     --heads 8 \
     --layers 1 \
