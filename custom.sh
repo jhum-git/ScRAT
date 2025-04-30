@@ -1,6 +1,6 @@
 python custom.py  \
     --task haniffa \
-    --relabeled covidonly \
+    --relabeled normal \
     --pca True \
     --heads 8 \
     --layers 1 \
