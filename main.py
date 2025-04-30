@@ -62,6 +62,8 @@ parser.add_argument('--norm_first', type=_str2bool, default=False)
 parser.add_argument('--warmup', type=_str2bool, default=False)
 parser.add_argument('--top_k', type=int, default=1)
 parser.add_argument('--relabeled', type=str, default="normal")
+parser.add_argument('--save', type=_str2bool, default=False)
+parser.add_argument('--savepath', type=str, default="artifacts/best_model_weights.pth")
 
 args = parser.parse_args()
 
@@ -119,7 +121,12 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
         model.load_state_dict(new_state_dict)
 
         # DO FREEZING AND LAYER REPLACEMENT HERE FOR FINE TUNING
-        
+
+        for param in model.parameters():
+            param.requires_grad = False
+
+        for param in model.output_net[4].parameters():
+            param.requires_grad = True
 
     model = nn.DataParallel(model)
     model.to(device)
@@ -246,7 +253,7 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
             y_ = y_[0][0]
             true.append(y_)
 
-            if args.model != 'Transformer':
+            if args.model != 'Transformer' or args.model == 'pretrained':
                 prob.append(out[0])
             else:
                 prob.append(out.mean())
@@ -285,12 +292,13 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
         v = patient_summary.get(w, 0)
         patient_summary[w] = v + 1
 
-    torch.save(best_model.state_dict(), 'artifacts/best_model_weights.pth')
+    if args.save:
+        torch.save(best_model.state_dict(), args.savepath)
     return test_auc, test_acc, cm, recall, precision
 
 # -------------------------------------------------- MAIN
 
-if args.model != 'Transformer':
+if args.model != 'Transformer' or args.model == 'pretrained':
     args.repeat = 60
 
 if args.task != 'custom':

@@ -1,5 +1,5 @@
 python main.py  \
-    --model Transformer \
+    --model pretrained \
     --epochs 100 \
     --norm_first False \
     --seed 100 \
@@ -21,6 +21,6 @@ python main.py  \
     --alpha 0.5 \
     --mix_type 1 \
     --repeat 1 \
-    --relabeled normal \
+    --relabeled forseverity \
     --save False \
     --train_sample_cells=500  --test_sample_cells=500  --train_num_sample=20 --test_num_sample=50
