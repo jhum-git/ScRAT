@@ -107,6 +107,19 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
         model = Linear_Classfier(input_dim=input_dim, cl=output_class)
     elif args.model == 'scfeed':
         model = scFeedForward(input_dim=input_dim, cl=output_class, model_dim=args.emb_dim, dropout=args.dropout, pca=args.pca)
+    elif args.model == 'pretrained':
+        print("FINE TUNING PRETRAINED MODEL")
+        model = TransformerPredictor(input_dim=50, model_dim=args.emb_dim, num_classes=1,
+                              num_heads=args.heads, num_layers=args.layers, dropout=args.dropout,
+                              input_dropout=0, pca=args.pca, norm_first=args.norm_first)
+
+        print("loading pre-trained weights")
+        state_dict = torch.load("artifacts/best_model_weights.pth")
+        new_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
+        model.load_state_dict(new_state_dict)
+
+        # DO FREEZING AND LAYER REPLACEMENT HERE FOR FINE TUNING
+        
 
     model = nn.DataParallel(model)
     model.to(device)
