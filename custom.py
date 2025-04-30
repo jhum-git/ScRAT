@@ -15,7 +15,7 @@ def _str2bool(v):
 parser = argparse.ArgumentParser(description='generte covid data')
 
 parser.add_argument("--task", type=str, default="haniffa")
-parser.add_argument("--relabeled", type=str, default="normal")
+parser.add_argument("--relabeled", type=str, default="covidonly")
 parser.add_argument('--pca', type=_str2bool, default=True)
 
 parser.add_argument("--test_sample_cells", type=int, default=500,
@@ -130,6 +130,8 @@ if args.relabeled == "covidonly":
   cm = confusion_matrix(true, pred).ravel()
   recall = cm[3] / (cm[3] + cm[2])
 
+  for idx in range(len(pred)):
+      print(f"{test_id[idx]} -- true: {label_dict[true[idx]]} -- pred: {label_dict[pred[idx]]}")
   print("Recall: %f", recall)
 else:
   test_auc = metrics.roc_auc_score(true, prob)
