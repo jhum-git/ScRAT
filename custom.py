@@ -35,7 +35,11 @@ args = parser.parse_args()
 
 p_idx, labels_, cell_type, patient_id, data, cell_type_large = Covid_data(args)
 
+# print("Orig Labels")
+# print(labels_)
+# print(labels_.shape)
 individual_test = sampling_test_all_only(args, p_idx, labels_)
+# print(individual_test)
 
 x_test = []
 y_test = []
@@ -44,11 +48,17 @@ id_test = []
 print("starting")
 
 temp_idx = np.arange(len(p_idx))
+# print(temp_idx)
+
 for t_idx in temp_idx:
     id, label = [id_l[0] for id_l in individual_test[t_idx]], [id_l[1] for id_l in individual_test[t_idx]]
     x_test.append([ii for ii in id])
     y_test.append(label[0])
     id_test.append(id)
+
+y_test = np.array(y_test).reshape([-1, 1])
+# print("Label")
+# print(label)
 
 print("init TransformerPredictor")
 best_model = TransformerPredictor(input_dim=50, model_dim=args.emb_dim, num_classes=1,
@@ -68,7 +78,12 @@ true = []
 wrong = []
 prob = []
 
-print("Loading Test Dataset")
+# print("Loading Test Dataset")
+# print("y_test type and shape")
+# print(type(y_test))
+# print(type(y_test[0]))
+# print(y_test[0].shape)
+
 dataset_2 = MyDataset(None, None, x_test, None, None, y_test, None, id_test, fold='test')
 test_loader = torch.utils.data.DataLoader(dataset_2, batch_size=1, shuffle=False, collate_fn=dataset_2.collate)
 
