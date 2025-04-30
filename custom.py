@@ -88,6 +88,7 @@ dataset_2 = MyDataset(None, None, x_test, None, None, y_test, None, id_test, fol
 test_loader = torch.utils.data.DataLoader(dataset_2, batch_size=1, shuffle=False, collate_fn=dataset_2.collate)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+best_model.to(device)
 sigmoid = torch.nn.Sigmoid().to(device)
 
 wrongs = []
