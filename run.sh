@@ -21,4 +21,5 @@ python main.py  \
     --alpha 0.5 \
     --mix_type 1 \
     --repeat 1 \
+    --relabeled normal \
     --train_sample_cells=500  --test_sample_cells=500  --train_num_sample=20 --test_num_sample=50

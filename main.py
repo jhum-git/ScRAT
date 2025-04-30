@@ -61,6 +61,7 @@ parser.add_argument('--mix_type', type=int, default=1)
 parser.add_argument('--norm_first', type=_str2bool, default=False)
 parser.add_argument('--warmup', type=_str2bool, default=False)
 parser.add_argument('--top_k', type=int, default=1)
+parser.add_argument('--relabeled', type=str, default="normal")
 
 args = parser.parse_args()
 
