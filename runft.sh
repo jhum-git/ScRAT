@@ -22,6 +22,6 @@ python main.py  \
     --mix_type 1 \
     --repeat 1 \
     --relabeled forseverity \
-    --unfreezing classifieronly \ 
+    --unfreezing classifieronly \
     --save False \
     --train_sample_cells=500  --test_sample_cells=500  --train_num_sample=20 --test_num_sample=50
