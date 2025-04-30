@@ -8,7 +8,7 @@ def Covid_data(args):
         if args.relabeled == "covidonly":
             print("RELABLED FOR COVID ONLY")
             id_dict = {'Critical ': 1, 'Death': -1, 'Severe': 1, 'nan': -1, 'LPS': -1, 'Non-covid': -1, 'Asymptomatic': 1,
-                    'Mild': 1, 'Healthy': -1, 'Moderate': 0}
+                    'Mild': 1, 'Healthy': -1, 'Moderate': 1}
         elif args.relabled == "forseverity":
             print("RELABLED FOR SEVERITY")
             id_dict = {'Critical ': 1, 'Death': -1, 'Severe': 1, 'nan': -1, 'LPS': -1, 'Non-covid': -1, 'Asymptomatic': 0,
