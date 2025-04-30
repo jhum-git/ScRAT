@@ -57,7 +57,10 @@ best_model = TransformerPredictor(input_dim=50, model_dim=args.emb_dim, num_clas
 # Evaluation
 
 print("loading pre-trained weights")
-best_model.load_state_dict(torch.load("artifacts/best_model_weights.pth"))
+state_dict = torch.load("artifacts/best_model_weights.pth")
+new_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
+
+best_model.load_state_dict(new_state_dict)
 best_model.eval()
 pred = []
 test_id = []
