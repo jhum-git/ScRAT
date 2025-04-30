@@ -126,21 +126,27 @@ if len(wrongs) == 0:
 else:
     wrongs = wrongs.intersection(set(wrong))
 
-test_auc = metrics.roc_auc_score(true, prob)
+if args.relabeled == "covidonly":
+  cm = confusion_matrix(true, pred).ravel()
+  recall = cm[3] / (cm[3] + cm[2])
 
-test_acc = accuracy_score(true, pred)
-for idx in range(len(pred)):
-    print(f"{test_id[idx]} -- true: {label_dict[true[idx]]} -- pred: {label_dict[pred[idx]]}")
-test_accs.append(test_acc)
+  print("Recall: %f", recall)
+else:
+  test_auc = metrics.roc_auc_score(true, prob)
 
-cm = confusion_matrix(true, pred).ravel()
-recall = cm[3] / (cm[3] + cm[2])
-precision = cm[3] / (cm[3] + cm[1])
-if (cm[3] + cm[1]) == 0:
-    precision = 0
+  test_acc = accuracy_score(true, pred)
+  for idx in range(len(pred)):
+      print(f"{test_id[idx]} -- true: {label_dict[true[idx]]} -- pred: {label_dict[pred[idx]]}")
+  test_accs.append(test_acc)
 
-print("Best performance: Epoch %d, Loss %f, Test ACC %f, Test AUC %f, Test Recall %f, Test Precision %f" % (
-max_epoch, max_loss, test_acc, test_auc, recall, precision))
-print("Confusion Matrix: " + str(cm))
+  cm = confusion_matrix(true, pred).ravel()
+  recall = cm[3] / (cm[3] + cm[2])
+  precision = cm[3] / (cm[3] + cm[1])
+  if (cm[3] + cm[1]) == 0:
+      precision = 0
+
+  print("Best performance: Epoch %d, Loss %f, Test ACC %f, Test AUC %f, Test Recall %f, Test Precision %f" % (
+  max_epoch, max_loss, test_acc, test_auc, recall, precision))
+  print("Confusion Matrix: " + str(cm))
 
 # Evaluation END
