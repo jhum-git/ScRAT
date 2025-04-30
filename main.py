@@ -62,6 +62,7 @@ parser.add_argument('--norm_first', type=_str2bool, default=False)
 parser.add_argument('--warmup', type=_str2bool, default=False)
 parser.add_argument('--top_k', type=int, default=1)
 parser.add_argument('--relabeled', type=str, default="normal")
+parser.add_argument('--unfreezing', type=str, default="all")
 parser.add_argument('--save', type=_str2bool, default=False)
 parser.add_argument('--savepath', type=str, default="artifacts/best_model_weights.pth")
 
@@ -125,8 +126,20 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
         for param in model.parameters():
             param.requires_grad = False
 
-        for param in model.output_net[4].parameters():
-            param.requires_grad = True
+        if args.unfreezing == "lastlayeronly":
+            for param in model.output_net[4].parameters():
+                param.requires_grad = True
+        elif args.unfreezing == "classifieronly":
+            for param in model.output_net.parameters():
+                param.requires_grad = True
+        elif args.unfreezing == "transformerdown":
+            for param in model.output_net.parameters():
+                param.requires_grad = True
+            for param in model.transformer.parameters():
+                param.requires_grad = True
+        elif args.unfreezing == "all":
+            for param in model.parameters():
+                param.requires_grad = True
 
     model = nn.DataParallel(model)
     model.to(device)
