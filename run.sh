@@ -3,7 +3,7 @@ python main.py  \
     --epochs 100 \
     --norm_first False \
     --seed 100 \
-    --task haniffa \
+    --task severity \
     --all 0 \
     --h_dim 128 \
     --heads 8 \
