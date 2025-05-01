@@ -311,14 +311,14 @@ def train(x_train, x_valid, x_test, y_train, y_valid, y_test, id_train, id_test,
 
 # -------------------------------------------------- MAIN
 
-if args.model != 'Transformer' or args.model == 'pretrained':
-    args.repeat = 60
+# if args.model != 'Transformer' or args.model == 'pretrained':
+#     args.repeat = 60
 
 if args.task != 'custom':
     p_idx, labels_, cell_type, patient_id, data, cell_type_large = Covid_data(args)
 else:
     p_idx, labels_, cell_type, patient_id, data, cell_type_large = Custom_data(args)
-rkf = RepeatedKFold(n_splits=abs(args.n_splits), n_repeats=args.repeat * 100, random_state=args.seed)
+rkf = RepeatedKFold(n_splits=abs(args.n_splits), n_repeats=args.repeat, random_state=args.seed)
 num = np.arange(len(p_idx))
 accuracy, aucs, cms, recalls, precisions = [], [], [], [], []
 iter_count = 0
